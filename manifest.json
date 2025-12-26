@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "Blocked",
+  "version": "1.0.0",
+
+  "icons": {
+    "16": "icon.png",
+    "32": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  },
+
+  "action": {
+    "default_icon": {
+      "16": "icon.png",
+      "32": "icon.png",
+      "48": "icon.png",
+      "128": "icon.png"
+    }
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js": ["Content.js"]
+    }
+  ]
+}
