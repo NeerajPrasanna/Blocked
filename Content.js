@@ -1,35 +1,32 @@
 (function () {
-  const removeShortsLink = () => {
-    // Remove Shorts link in sidebar
+  const removeShorts = () => {
+    // Sidebar Shorts link
     document.querySelectorAll('a[title="Shorts"]').forEach((el) => el.remove());
 
-    // Remove Shorts shelf from homepage
-    document
-      .querySelectorAll(
-        "grid-shelf-view-model.ytGridShelfViewModelHost.ytd-item-section-renderer"
-      )
-      .forEach((el) => el.remove());
-    //Remove the Shorts tab from a channel's page
+    // Shorts tab on channel pages
     document
       .querySelectorAll('yt-tab-shape[tab-title="Shorts"]')
       .forEach((el) => el.remove());
-    //Remove the shorts section from a channel's page
+
+    // Shorts shelves / sections
     document
       .querySelectorAll("ytd-reel-shelf-renderer")
       .forEach((el) => el.remove());
-
-    //Remove the shorts sections from the homepage, in case the first one didnt work
     document
       .querySelectorAll("ytd-rich-section-renderer")
       .forEach((el) => el.remove());
+
+    // Shorts videos disguised as normal videos
+    document
+      .querySelectorAll('a[href^="/shorts/"]')
+      .forEach((a) => a.closest("ytd-video-renderer")?.remove());
   };
 
-  removeShortsLink();
+  // Initial cleanup
+  removeShorts();
 
-  const observer = new MutationObserver(() => {
-    removeShortsLink();
-  });
-
+  // YouTube is SPA → observe DOM changes
+  const observer = new MutationObserver(removeShorts);
   observer.observe(document.body, {
     childList: true,
     subtree: true,
